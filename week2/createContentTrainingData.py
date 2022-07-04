@@ -75,10 +75,7 @@ with open(output_file, 'w') as output:
                       # Replace newline chars with spaces so fastText doesn't complain
                       name = child.find('name').text.replace('\n', ' ')
                       output.write("__label__%s %s\n" % (cat, transform_name(name)))
-<<<<<<< HEAD
 
 df = pandas.read_csv('/tmp/labeled_products.txt', names=["str"])
 df = df.str.str.split(' ', n=1, expand=True).groupby(0).filter(lambda x: len(x) >= min_products)
 df.to_csv(output_file, sep='\t', header=None, index=False) 
-=======
->>>>>>> parent of e213dcf (Level 1 + Level 2)
