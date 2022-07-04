@@ -1,17 +1,13 @@
 import argparse
 import os
 import random
-<<<<<<< HEAD
 import re
 import pandas
 from nltk.stem.snowball import EnglishStemmer
-=======
->>>>>>> parent of e213dcf (Level 1 + Level 2)
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 def transform_name(product_name):
-<<<<<<< HEAD
     # Converting product name to lower
     product_name = product_name.lower()
     # Removing non alpha characteres
@@ -20,10 +16,6 @@ def transform_name(product_name):
     product_name = re.sub(r"(?a:\s+)"," ", product_name) 
     product_name = product_name.strip()
     return " ".join(map(stemmer.stem, product_name.split(" ")))
-=======
-    # IMPLEMENT
-    return product_name
->>>>>>> parent of e213dcf (Level 1 + Level 2)
 
 # Directory for product data
 directory = r'/workspace/datasets/product_data/products/'
