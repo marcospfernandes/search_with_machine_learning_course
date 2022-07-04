@@ -16,7 +16,7 @@ def transform_name(product_name):
     # Removing non alpha characteres
     product_name=re.sub(r'[\W_]+', '', product_name)
     # Merging whitespaces 
-    product_name = re.sub(r"(?a:\s+)",' ', product_name) 
+    product_name = re.sub(r"(?a:\s+)"," ", product_name) 
     product_name = product_name.strip()
     return " ".join(map(stemmer.stem, product_name.split(" ")))
 

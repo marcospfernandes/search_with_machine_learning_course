@@ -6,7 +6,7 @@ python week2/createContentTrainingData.py --output /workspace/datasets/fasttext/
 echo 'Shuffling the Data...'
 shuf /workspace/datasets/fasttext/labeled_products.txt > /workspace/datasets/fasttext/shuffled_labeled_products.txt
 echo 'Generating Test Data...'
-trail -n10000 /workspace/datasets/fasttext/shuffled_labeled_products.txt > /workspace/datasets/fasttext/training_data.txt
+tail -n10000 /workspace/datasets/fasttext/shuffled_labeled_products.txt > /workspace/datasets/fasttext/training_data.txt
 echo 'Generating train Data...'
 head -n10000 /workspace/datasets/fasttext/shuffled_labeled_products.txt > /workspace/datasets/fasttext/test_data.txt
 ~/fastText-0.9.2/fasttext supervised -input /workspace/datasets/fasttext/training_data.txt -output /workspace/datasets/fasttext/product_classifier -wordNgrams 2 -lr 1 -epoch 25
