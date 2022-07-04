@@ -1,12 +1,21 @@
 import argparse
 import os
 import random
+import re
+import pandas
+from nltk.stem.snowball import EnglishStemmer
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 def transform_name(product_name):
-    # IMPLEMENT
-    return product_name
+    # Converting product name to lower
+    product_name = product_name.lower()
+    # Removing non alpha characteres
+    product_name=re.sub(r'[\W_]+', '', product_name)
+    # Merging whitespaces 
+    product_name = re.sub(r"(?a:\s+)"," ", product_name) 
+    product_name = product_name.strip()
+    return " ".join(map(stemmer.stem, product_name.split(" ")))
 
 # Directory for product data
 directory = r'/workspace/datasets/product_data/products/'
@@ -66,3 +75,7 @@ with open(output_file, 'w') as output:
                       # Replace newline chars with spaces so fastText doesn't complain
                       name = child.find('name').text.replace('\n', ' ')
                       output.write("__label__%s %s\n" % (cat, transform_name(name)))
+
+df = pandas.read_csv('/tmp/labeled_products.txt', names=["str"])
+df = df.str.str.split(' ', n=1, expand=True).groupby(0).filter(lambda x: len(x) >= min_products)
+df.to_csv(output_file, sep='\t', header=None, index=False) 
