@@ -15,6 +15,6 @@ head -n10000 /workspace/datasets/fasttext/shuffled_labeled_products.txt > /works
 
 # LEVEL 2
 echo 'Running level 2...'
-cut -d$'\t' -f2- /workspace/datasets/fasttext/shuffled_labeled_products.txt > $FT_DIR/normalized_titles.txt
-~/fastText-0.9.2/fasttext skipgram -input $FT_DIR/normalized_titles.txt -output $FT_DIR/title_model -minCount 20 -epoch 25
-~/fastText-0.9.2/fasttext nn $FT_DIR/title_model.bin
+cut -d$'\t' -f2- /workspace/datasets/fasttext/shuffled_labeled_products.txt > /workspace/datasets/fasttext/normalized_titles.txt
+~/fastText-0.9.2/fasttext skipgram -input /workspace/datasets/fasttext/normalized_titles.txt -output /workspace/datasets/fasttext/title_model -minCount 20 -epoch 25
+~/fastText-0.9.2/fasttext nn /workspace/datasets/fasttext/title_model.bin

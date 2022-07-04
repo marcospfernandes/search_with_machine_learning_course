@@ -2,7 +2,7 @@ import argparse
 import os
 import random
 import re
-
+import pandas
 from nltk.stem.snowball import EnglishStemmer
 import xml.etree.ElementTree as ET
 
@@ -15,8 +15,9 @@ def transform_name(product_name):
     product_name = product_name.lower()
     # Removing non alpha characteres
     product_name=re.sub(r'[\W_]+', '', product_name)
-    # Removing whitespaces 
-    product_name = re.sub(r"(?a:^\s+|\s+$)",'', product_name) 
+    # Merging whitespaces 
+    product_name = re.sub(r"(?a:\s+)",' ', product_name) 
+    product_name = product_name.strip()
     return " ".join(map(stemmer.stem, product_name.split(" ")))
 
 # Directory for product data
@@ -79,5 +80,5 @@ with open('/tmp/labeled_products.txt', 'w') as output:
                       output.write("__label__%s %s\n" % (cat, transform_name(name)))
 
 df = pandas.read_csv('/tmp/labeled_products.txt')
-df = df.str.str.split(' ', n=1, expand=True).groupby(axis=0).filter(lambda x: len(x) >= min_filter_cut)
+df = df.str.str.split(' ', n=1, expand=True).groupby(0).filter(lambda x: len(x) >= min_filter_cut)
 df.to_csv(output_file, sep='\t', header=None, index=False) 
