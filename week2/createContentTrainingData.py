@@ -79,6 +79,6 @@ with open('/tmp/labeled_products.txt', 'w') as output:
                       name = child.find('name').text.replace('\n', ' ')
                       output.write("__label__%s %s\n" % (cat, transform_name(name)))
 
-df = pandas.read_csv('/tmp/labeled_products.txt')
-df = df.str.str.split(' ', n=1, expand=True).groupby(0).filter(lambda x: len(x) >= min_filter_cut)
+df = pandas.read_csv('/tmp/labeled_products.txt', names=["str"])
+df = df.str.str.split(' ', n=1, expand=True).groupby(0).filter(lambda x: len(x) >= min_products)
 df.to_csv(output_file, sep='\t', header=None, index=False) 
