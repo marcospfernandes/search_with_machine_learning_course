@@ -1,16 +1,17 @@
 import argparse
 import os
 import random
+<<<<<<< HEAD
 import re
 import pandas
 from nltk.stem.snowball import EnglishStemmer
+=======
+>>>>>>> parent of e213dcf (Level 1 + Level 2)
 import xml.etree.ElementTree as ET
-
 from pathlib import Path
 
-stemmer = EnglishStemmer()
-
 def transform_name(product_name):
+<<<<<<< HEAD
     # Converting product name to lower
     product_name = product_name.lower()
     # Removing non alpha characteres
@@ -19,6 +20,10 @@ def transform_name(product_name):
     product_name = re.sub(r"(?a:\s+)"," ", product_name) 
     product_name = product_name.strip()
     return " ".join(map(stemmer.stem, product_name.split(" ")))
+=======
+    # IMPLEMENT
+    return product_name
+>>>>>>> parent of e213dcf (Level 1 + Level 2)
 
 # Directory for product data
 directory = r'/workspace/datasets/product_data/products/'
@@ -35,7 +40,7 @@ general.add_argument("--label", default="id", help="id is default and needed for
 general.add_argument("--sample_rate", default=1.0, type=float, help="The rate at which to sample input (default is 1.0)")
 
 # IMPLEMENT: Setting min_products removes infrequent categories and makes the classifier's task easier.
-general.add_argument("--min_products", default=500, type=int, help="The minimum number of products per category (default is 500).")
+general.add_argument("--min_products", default=0, type=int, help="The minimum number of products per category (default is 0).")
 
 args = parser.parse_args()
 output_file = args.output
@@ -54,7 +59,7 @@ if args.label == 'name':
     names_as_labels = True
 
 print("Writing results to %s" % output_file)
-with open('/tmp/labeled_products.txt', 'w') as output:
+with open(output_file, 'w') as output:
     for filename in os.listdir(directory):
         if filename.endswith(".xml"):
             print("Processing %s" % filename)
@@ -78,7 +83,10 @@ with open('/tmp/labeled_products.txt', 'w') as output:
                       # Replace newline chars with spaces so fastText doesn't complain
                       name = child.find('name').text.replace('\n', ' ')
                       output.write("__label__%s %s\n" % (cat, transform_name(name)))
+<<<<<<< HEAD
 
 df = pandas.read_csv('/tmp/labeled_products.txt', names=["str"])
 df = df.str.str.split(' ', n=1, expand=True).groupby(0).filter(lambda x: len(x) >= min_products)
 df.to_csv(output_file, sep='\t', header=None, index=False) 
+=======
+>>>>>>> parent of e213dcf (Level 1 + Level 2)
